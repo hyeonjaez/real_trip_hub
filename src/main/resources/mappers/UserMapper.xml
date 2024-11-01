@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.TripHub.user.mapper.UserMapper">
+
+    <select id="idCheck" resultType="int" parameterType="String">
+        SELECT COUNT(*)
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
+
+    <insert id="createUser" parameterType="com.ssafy.TripHub.user.dto.request.UserRegisterRequest">
+        INSERT INTO user (user_id, password, role, email, age, sex, phone_number, created_at, ability_level)
+        VALUES (#{userId},
+                #{password},
+                'USER',
+                #{email},
+                #{age},
+                #{sex},
+                #{phoneNumber},
+                NOW(),
+                50)
+    </insert>
+
+    <select id="getUserWithPasswordByUserId" resultType="com.ssafy.TripHub.user.dto.UserWithPassword"
+            parameterType="String">
+        SELECT id,
+               user_id,
+               email,
+               role,
+               ability_level,
+               created_at,
+               age,
+               sex,
+               phone_number,
+               password
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="getUserWithPasswordById" resultType="com.ssafy.TripHub.user.dto.UserWithPassword"
+            parameterType="Long">
+        SELECT id,
+               user_id,
+               email,
+               role,
+               ability_level,
+               created_at,
+               age,
+               sex,
+               phone_number,
+               password
+        FROM user
+        WHERE id = #{id}
+    </select>
+
+    <update id="updateUser" parameterType="map">
+        UPDATE user
+        SET email        = #{userModifyRequest.email},
+            phone_number = #{userModifyRequest.phoneNumber}
+        WHERE id = #{id}
+    </update>
+
+    <update id="changePassword" parameterType="map">
+        UPDATE user
+        SET password = #{changePassword}
+        WHERE id = #{id}
+    </update>
+
+    <select id="getAllUsers" resultType="com.ssafy.TripHub.user.dto.response.UserResponse">
+        SELECT id,
+               user_id,
+               email,
+               role,
+               ability_level,
+               created_at,
+               age,
+               sex,
+               phone_number
+        FROM user
+    </select>
+
+</mapper>

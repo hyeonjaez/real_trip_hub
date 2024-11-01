@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.TripHub.tripinformation.mapper.GugunMapper">
+
+    <select id="getGugunsBysidoCode" parameterType="int" resultType="com.ssafy.TripHub.tripinformation.dto.response.GugunListResponse">
+        SELECT id, sido_code AS sidoCode, gugun_name AS gugunName, gugun_code AS gugunCode
+        FROM guguns
+        WHERE sido_code = #{sidoCode}
+    </select>
+
+</mapper>
